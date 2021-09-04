@@ -1,0 +1,13 @@
+query exampleQuery {
+  exampleQuery {
+    success
+    message
+  }
+}
+
+mutation exampleMutation {
+  exampleMutation {
+    success
+    message
+  }
+}
