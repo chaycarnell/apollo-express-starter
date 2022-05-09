@@ -1,7 +1,7 @@
 /**
  * Return an example response
  */
-export const exampleResponse = async () => ({
-  sucess: true,
+export const exampleResponse = () => ({
+  success: true,
   message: 'example success message',
 });

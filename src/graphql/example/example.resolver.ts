@@ -2,12 +2,12 @@ import { exampleResponse } from './example.functions';
 
 const resolver = {
   Query: {
-    exampleQuery: async () => {
+    exampleQuery: () => {
       return exampleResponse();
     },
   },
   Mutation: {
-    exampleMutation: async () => {
+    exampleMutation: () => {
       return exampleResponse();
     },
   },
