@@ -2,20 +2,30 @@
   "name": "apollo-express-template",
   "version": "1.0.0",
   "description": "apollo express backend starter server",
-  "main": "index.js",
-  "scripts": {
-    "start": "ts-node --transpile-only ./src/server.ts",
-    "start:dev": "nodemon --exec ts-node ./src/server.ts",
-    "test": "jest --coverage",
-    "test:ci": "jest --ci --env=jsdom",
-    "lint": "tsc --noEmit && eslint ./src"
-  },
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "chaycarnell@gmail.com",
   "license": "ISC",
+  "author": "chaycarnell@gmail.com",
+  "main": "index.js",
+  "scripts": {
+    "lint": "tsc --noEmit && eslint ./src",
+    "sort": "npx sort-package-json",
+    "start": "ts-node --transpile-only ./src/server.ts",
+    "start:dev": "nodemon --exec ts-node ./src/server.ts",
+    "test": "jest --coverage",
+    "test:ci": "jest --ci --env=jsdom"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ],
+    "transformIgnorePatterns": []
+  },
   "dependencies": {
     "@graphql-tools/schema": "^8.5.0",
     "apollo-server-core": "^3.10.0",
@@ -48,14 +58,5 @@
     "nodemon": "^2.0.19",
     "prettier": "2.7.1",
     "typescript": "^4.7.4"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js",
-      "json",
-      "node"
-    ],
-    "transformIgnorePatterns": []
   }
 }
