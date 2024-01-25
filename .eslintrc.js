@@ -1,25 +1,12 @@
 module.exports = {
-  env: {
-    es6: true,
-    node: true,
-    jest: true,
-  },
-  extends: ['eslint:recommended', 'airbnb-base', 'prettier'],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2021,
+    sourceType: 'module',
+    project: './tsconfig.json',
   },
-  settings: {
-    'import/resolver': {
-      alias: {
-        map: [
-          ['@utils', './src/utils'],
-          ['@db', './src/db'],
-          ['@api', './src/api'],
-          ['@services', './src/services'],
-          ['@pubsub', './src/pubsub'],
-        ],
-        extensions: ['.ts', '.js', '.json'],
-      },
-    },
+  rules: {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   },
+  plugins: ["simple-import-sort"],
 };

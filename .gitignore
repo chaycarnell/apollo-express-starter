@@ -1,5 +1,14 @@
-node_modules/
-coverage/
+# Dependencies
+node_modules
+
+# Env config
 .env
+
+# Build output
+dist
+
+# System
 .DS_Store
-dist/
+
+# Test output
+coverage
