@@ -1,65 +1,54 @@
-// GraphQL server dependencies
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
+import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { loadFilesSync } from '@graphql-tools/load-files';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-// Glue used for matching resolvers with schema definitions
-import glue from 'schemaglue';
-import { v4 as uuidv4 } from 'uuid';
-// Apollo server landing pages
-import {
-  ApolloServerPluginDrainHttpServer,
-  ApolloServerPluginLandingPageDisabled,
-  ApolloServerPluginLandingPageGraphQLPlayground,
-} from 'apollo-server-core';
-// Optional utils for assisting with logging and error handling
-import errorHandler from './utils/errorHandler';
+import express from 'express';
+import { GraphQLFormattedError } from 'graphql';
+import http from 'http';
+import path from 'path';
+
+import errorHandler from './utils/graphqlErrorHandler';
+import loggerPlugin from './utils/graphqlLogger';
 import logger from './utils/logger';
-import loggerPlugin from './utils/loggingPlugin';
-// Get env vars
-import env from './env';
 
-// Glue schemas/resolvers together
-const { schema, resolver } = glue('src/graphql', { mode: 'ts' });
+const typeDefs = loadFilesSync(path.join(__dirname, '../schemas/**/*.graphql'));
+const resolvers = loadFilesSync(
+  path.join(__dirname, 'schemas/**/*.resolver.*'),
+);
 
-// Derive if environment is production
-const isProduction = env.NODE_ENV === 'production';
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
-// Set the Apollo server landing page
-const landingPage = isProduction
-  ? ApolloServerPluginLandingPageDisabled()
-  : ApolloServerPluginLandingPageGraphQLPlayground();
-
-// Initialise Apollo server
-const initialiseApolloServer = (app: any) => {
-  const server = new ApolloServer({
-    schema: makeExecutableSchema({
-      typeDefs: gql(schema),
-      resolvers: resolver,
-    }),
-    formatError: errorHandler,
-    introspection: !isProduction,
+const createApolloServer = (httpServer: http.Server, isProduction: boolean) => {
+  const landingPage = isProduction
+    ? ApolloServerPluginLandingPageDisabled()
+    : ApolloServerPluginLandingPageLocalDefault();
+  return new ApolloServer({
+    schema,
     plugins: [
       landingPage,
-      loggerPlugin,
-      ApolloServerPluginDrainHttpServer({ httpServer: app }),
+      loggerPlugin(),
+      ApolloServerPluginDrainHttpServer({ httpServer }),
     ],
     logger,
-    context: async ({ connection }: any) => {
-      // Filter out subscriptions
-      if (connection) return connection.context;
-      // Generate a UUID for log tracing through server
-      const logTraceId = uuidv4();
-      // Apply context to request
-      return {
-        logTraceId,
-      };
-    },
+    introspection: !isProduction,
+    formatError: (formattedError: GraphQLFormattedError, __: unknown) =>
+      errorHandler(formattedError),
   });
-  // Middleware: GraphQL
-  server.start().then(() =>
-    server.applyMiddleware({
-      app,
-    }),
-  );
 };
 
-export default initialiseApolloServer;
+const options = {
+  context: async ({ req }: { req: express.Request }) => {
+    // Mock example of adding a user to request context if authorization header present
+    // For production suggest to use GraphQL Shield in combination with JWT validation/decode utils
+    const user = (req.headers.authorization && { id: '1000' }) || undefined;
+    // Apply context to request
+    return { user, logTraceId: req.logTraceId };
+  },
+};
+
+export { createApolloServer, options };

@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 export default {
-  example: async (_: Request, res: Response) => {
+  example: async (_: Request, res: Response, __: NextFunction) => {
     res.json({
       success: true,
       status: 200,

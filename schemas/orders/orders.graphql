@@ -1,0 +1,9 @@
+type Order {
+  orderId: String
+  customerId: String
+  cost: Float
+}
+
+type Query {
+  orders: [Order]
+}
