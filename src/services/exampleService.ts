@@ -1,1 +1,1 @@
-// Some third-party service here i.e. external API calls via Axios etc
+// Some third-party service integration here for example an external API call via Axios/Fetch
