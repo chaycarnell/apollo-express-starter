@@ -1,7 +1,8 @@
 import { BaseContext } from '@apollo/server';
 
-export interface CustomContext extends BaseContext {
+export interface CustomRequestContext extends BaseContext {
   logTraceId: string;
+  authenticated: boolean;
   user?: {
     id: string;
   };

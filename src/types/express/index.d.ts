@@ -1,10 +1,10 @@
-// Make file a module and avoid TypeScript error
+import { CustomRequestContext } from '../interfaces';
+
+// Export to create a module and avoid TS error
 export {};
 
 declare global {
   namespace Express {
-    export interface Request {
-      logTraceId: string;
-    }
+    export interface Request extends Express.Request, CustomRequestContext {}
   }
 }
