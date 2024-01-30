@@ -1,4 +1,18 @@
-import { ErrorMap } from '../types/types';
+import { ErrorObject } from '../types/interfaces';
+import { ErrorCode, ErrorMap } from '../types/types';
+
+export class CustomExpressError extends Error {
+  public errorCode: ErrorCode;
+  constructor(errorCode: ErrorCode, message?: string) {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
+    this.name = this.constructor.name;
+    this.errorCode = errorCode;
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+  }
+}
 
 // Map of known error types to be returned to client
 export const errorTypes: ErrorMap = {
@@ -13,7 +27,7 @@ export const errorTypes: ErrorMap = {
   UNKNOWN: { status: 500, message: 'UNKNOWN_ERROR' },
 };
 
-export const getError = (errorCode: string) => {
+export const getError = (errorCode: ErrorCode): ErrorObject => {
   if (!errorTypes[errorCode]) {
     return errorTypes.UNKNOWN;
   }

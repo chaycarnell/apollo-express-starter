@@ -1,15 +1,15 @@
 import { GraphQLResolveInfo } from 'graphql';
 
-import { CustomContext } from '../../types/interfaces';
+import { CustomRequestContext } from '../../../types/interfaces';
 import { mockOrders } from './mock';
 
 export const resolver = {
   Query: {
     orders: (
       _parent: undefined,
-      __args: undefined,
-      context: CustomContext,
-      ___resolveInfo: GraphQLResolveInfo,
+      _args: undefined,
+      context: CustomRequestContext,
+      _resolveInfo: GraphQLResolveInfo,
     ) => {
       const { user } = context;
       const userId = user && user.id;
