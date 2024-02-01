@@ -11,12 +11,13 @@ import path from 'path';
 import loggerPlugin from './apollo/plugins/apolloLogger';
 import contextBuilder from './apollo/utils/apolloContextBuilder';
 import errorHandler from './apollo/utils/apollolErrorHandler';
+import { Resolvers } from './types/graphql-generated';
 import logger from './utils/logger';
 
 const typeDefs = loadFilesSync(path.join(__dirname, '../schemas/**/*.graphql'));
 const resolvers = loadFilesSync(
   path.join(__dirname, 'apollo/schemas/**/*.resolver.*'),
-);
+) as Resolvers;
 
 const schema = makeExecutableSchema({
   typeDefs,

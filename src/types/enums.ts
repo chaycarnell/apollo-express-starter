@@ -17,3 +17,7 @@ export enum ErrorCodes {
   GRAPHQL_VALIDATION_FAILED = 'GRAPHQL_VALIDATION_FAILED',
   UNKNOWN = 'UNKNOWN',
 }
+
+export enum ProductType {
+  Fruit = 'Fruit',
+}

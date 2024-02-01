@@ -1,0 +1,13 @@
+overwrite: true
+schema: 'schemas/**/*.graphql'
+generates:
+  src/types/graphql-generated.ts:
+    config:
+      contextType: './interfaces#CustomRequestContext'
+      enumValues:
+        ProductType: './enums#ProductType'
+      namingConvention:
+        enumValues: keep
+    plugins:
+      - 'typescript'
+      - 'typescript-resolvers'

@@ -1,6 +1,11 @@
+enum ProductType {
+  Fruit
+}
+
 type Product {
   productId: String
   productName: String
+  productType: ProductType
 }
 
 type Query {
