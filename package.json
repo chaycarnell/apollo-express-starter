@@ -7,8 +7,8 @@
   "author": "Chay Carnell",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "generate:types": "graphql-codegen && npm run lint:fix",
     "check:deps": "npm outdated",
+    "generate:types": "graphql-codegen && npm run lint:fix",
     "lint": "tsc --noEmit && eslint . --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky",
