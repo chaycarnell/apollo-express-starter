@@ -2,9 +2,12 @@
   "name": "apollo-express-starter",
   "version": "1.0.0",
   "description": "A starter Apollo Express server setup for new projects",
-  "keywords": [],
   "license": "ISC",
-  "author": "Chay Carnell",
+  "author": {
+    "name": "Chay Carnell",
+    "email": "chaycarnell@gmail.com",
+    "url": "https://chaycarnell.com/"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "check:deps": "npm outdated",
@@ -49,5 +52,9 @@
     "prettier": "^3.2.5",
     "tsx": "^4.7.0",
     "typescript": "5.3.3"
+  },
+  "engines": {
+    "node": "21.6.1",
+    "npm": "10.2.4"
   }
 }
