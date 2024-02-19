@@ -37,7 +37,7 @@
     "@graphql-codegen/typescript-resolvers": "^4.0.4",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
-    "@types/node": "^20.11.17",
+    "@types/node": "^20.11.19",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
